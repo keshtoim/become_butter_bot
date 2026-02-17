@@ -6,6 +6,7 @@ from aiogram import Bot, Dispatcher
 from bot.config import BOT_TOKEN
 from database.models import async_main
 from handlers import commands
+from handlers.tasks import router as task_router
 
 
 async def main():
@@ -17,6 +18,7 @@ async def main():
 
     # Регистрируем роутеры
     dp.include_router(commands.router)
+    dp.include_router(task_router)
 
     # Включаем логирование
     logging.basicConfig(level=logging.INFO, stream=sys.stdout)
