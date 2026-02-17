@@ -5,6 +5,8 @@ import sys
 from aiogram import Bot, Dispatcher
 from bot.config import BOT_TOKEN
 from database.models import async_main
+from handlers import commands
+
 
 async def main():
     # Создаем таблицы при старте
@@ -12,6 +14,10 @@ async def main():
 
     bot = Bot(token=BOT_TOKEN)
     dp = Dispatcher()
+
+    # Регистрируем роутеры
+    dp.include_router(commands.router)
+
     # Включаем логирование
     logging.basicConfig(level=logging.INFO, stream=sys.stdout)
 
