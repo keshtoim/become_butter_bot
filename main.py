@@ -7,6 +7,7 @@ from bot.config import BOT_TOKEN
 from database.models import async_main
 from handlers import commands
 from handlers.tasks import router as task_router
+from  services.scheduler import  setup_scheduler
 
 
 async def main():
@@ -19,6 +20,9 @@ async def main():
     # Регистрируем роутеры
     dp.include_router(commands.router)
     dp.include_router(task_router)
+
+    # Запуск планировщика
+    setup_scheduler(bot)
 
     # Включаем логирование
     logging.basicConfig(level=logging.INFO, stream=sys.stdout)

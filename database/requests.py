@@ -32,3 +32,9 @@ async def update_user_progress(tg_id, new_day, new_drops, new_status):
             )
         )
         await session.commit()
+
+# Получить всех пользователей для рассылки
+async def get_all_users():
+    async with async_session() as session:
+        result = await session.scalars(select(User))
+        return result.all()
