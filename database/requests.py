@@ -2,6 +2,7 @@ from database.models import async_session, User
 from sqlalchemy import select
 from datetime import datetime
 from sqlalchemy import select, update
+import random
 
 # Регистрация юзера (вызываем при /start)
 async def set_user(tg_id, username):
@@ -38,3 +39,19 @@ async def get_all_users():
     async with async_session() as session:
         result = await session.scalars(select(User))
         return result.all()
+
+# Переключение режима отдыха
+async def toggle_rest(tg_id, status: bool):
+    async with async_session() as session:
+        await session.execute(update(User).where(User.tg_id == tg_id).values(is_resting=status))
+        await session.commit()
+
+# Ободряющие фразы
+ENCOURAGEMENT = [
+    "Масло должно настояться. Отдыхай, завтра дадим жару! 🔥",
+    "Даже самому элитному маслу нужен холод. Переведи дух. 🧊",
+    "Не прогоркай! Отдых — это часть процесса. Жду тебя завтра. 💪"
+]
+
+def get_random_encouragement():
+    return random.choice(ENCOURAGEMENT)

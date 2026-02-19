@@ -27,6 +27,8 @@ class User(Base):
     last_task_sent = mapped_column(DateTime, server_default=func.now())
     joined_at = mapped_column(DateTime, server_default=func.now())
 
+    is_resting: Mapped[bool] = mapped_column(default=False)
+
 # Инициализация таблиц
 async def async_main():
     async with engine.begin() as conn:

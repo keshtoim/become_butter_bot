@@ -6,6 +6,15 @@ import database.requests as rq
 from datetime import datetime, timedelta
 
 
+async def send_daily_task(bot: Bot):
+    users = await rq.get_all_users()
+    for user in users:
+        if user.is_resting:
+            # Если юзер отдыхал — снимаем режим отдыха и шлем ободрение
+            await rq.toggle_rest(user.tg_id, False)
+            await bot.send_message(user.tg_id, "Ты отдохнул? Пора возвращаться в форму! 🧈")
+            continue
+
 # Функция, которая будет запускаться по расписанию
 async def send_daily_task(bot: Bot):
     users = await rq.get_all_users()
@@ -42,3 +51,5 @@ def setup_scheduler(bot: Bot):
     # Проверка базы каждый час
     scheduler.add_job(send_daily_task, "interval", hours=1, args=[bot])
     scheduler.start()
+
+
