@@ -2,37 +2,37 @@
 
 > **"Better is Good, but Butter is Best."**
 
-Become Butter — это Telegram-бот для саморазвития, основанный на 28-дневном цикле трансформации. Мы не просто становимся лучше, мы меняем свою структуру: от «жидких сливок» до «чистого золота» (Solid Gold Butter).
+**Become Butter** is a self-improvement Telegram bot based on a 28-day transformation cycle. We don’t just become better; we change our entire structure: from "liquid cream" to "pure gold" (Solid Gold Butter).
 
-Никакой мотивационной воды — только научно-обоснованные микро-задания, подкрепленные нейробиологией и психологией.
+No motivational fluff — only scientifically backed micro-tasks grounded in neurobiology and psychology.
 
-## 🎯 Философия проекта
-Всё в жизни должно идти **как по маслу**. Но чтобы достичь этой плавности, нужно сначала «взбить» свой характер, убрать лишний шум и застыть в форме лучшей версии себя.
+## 🎯 Project Philosophy
+Everything in life should run **smooth like butter**. But to achieve that smoothness, you must first "churn" your character, remove the excess noise, and set into the shape of your best self.
 
-### Программа на 28 дней:
-1.  **Неделя 1: Churning the Cream (Взбивание)** — Очистка инфо-поля и база здоровья.
-2.  **Неделя 2: Smooth Texture (Гладкая текстура)** — Продуктивность и работа с фокусом.
-3.  **Неделя 3: Rich Flavor (Насыщенный вкус)** — Интеллект, осознанность и нейропластичность.
-4.  **Неделя 4: Solid Gold (Чистое золото)** — Дисциплина и закалка характера.
+### The 28-Day Program:
+1.  **Week 1: Churning the Cream** — Clearing mental clutter and establishing health basics.
+2.  **Week 2: Smooth Texture** — Productivity and focus training.
+3.  **Week 3: Rich Flavor** — Intellect, mindfulness, and neuroplasticity.
+4.  **Week 4: Solid Gold** — Discipline and character tempering.
 
-## 🛠 Технологии
+## 🛠 Tech Stack
 - **Python 3.10+**
-- **Aiogram 3.x** (Асинхронный фреймворк для бота)
-- **SQLAlchemy / Aiosqlite** (База данных)
-- **APScheduler** (Автоматическая рассылка ежедневных заданий)
-- **Pydantic / Dotenv** (Управление настройками)
+- **Aiogram 3.x** (Asynchronous framework for the bot)
+- **SQLAlchemy / Aiosqlite** (Database)
+- **APScheduler** (Automated daily task distribution)
+- **Pydantic / Dotenv** (Configuration management)
 
-## 📁 Структура проекта
-Проект построен по модульной архитектуре для легкого масштабирования:
-- `bot/` — настройки и конфигурация.
-- `data/` — контент заданий и тексты бота.
-- `database/` — модели данных и CRUD запросы.
-- `handlers/` — логика обработки команд и задач.
-- `services/` — планировщик рассылок и сторонние сервисы.
+## 📁 Project Structure
+The project is built on a modular architecture for easy scaling:
+- `bot/` — Settings and configuration.
+- `data/` — Task content and bot text strings.
+- `database/` — Data models and CRUD queries.
+- `handlers/` — Logic for handling commands and tasks.
+- `services/` — Broadcast scheduler and external services.
 
-## 💎 Геймификация
-Выполняй ежедневные задания и получай Butter Drops (капли масла) 💧. Накапливай их, чтобы повышать свой статус:
-- **🥛 Raw Cream** (Сырые сливки)
-- **🥣 Whipped Butter** (Взбитое масло)
-- **🧈 Premium Block** (Премиальный брусок)
-- **🏆 Solid Gold** (Чистое золото)
+## 💎 Gamification
+Complete daily tasks to earn **Butter Drops** 💧. Accumulate them to upgrade your status:
+- **🥛 Raw Cream**
+- **🥣 Whipped Butter**
+- **🧈 Premium Block**
+- **🏆 Solid Gold**
