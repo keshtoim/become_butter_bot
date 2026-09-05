@@ -7,6 +7,15 @@ STATUSES = {
     28: "Solid Gold 🏆"
 }
 
+# Иконка для каждого порога статуса (файлы в assets/icons/png/)
+STATUS_ICONS = {
+    0: "status_0_raw_cream",
+    7: "status_7_whipped_butter",
+    14: "status_14_smooth_texture",
+    21: "status_21_premium_block",
+    28: "status_28_solid_gold",
+}
+
 # Основной контент марафона на 28 дней
 TASKS = {
     1: {

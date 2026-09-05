@@ -2,6 +2,7 @@ from aiogram import Router, types, F
 from aiogram.filters import CommandStart
 import database.requests as rq
 from bot.keyboards import get_main_kb, get_task_kb
+from bot.media import answer_with_icon, day_icon
 from data.content import TASKS
 import random
 
@@ -21,7 +22,9 @@ async def cmd_start(message: types.Message):
     await rq.set_user(message.from_user.id, message.from_user.username)
     user = await rq.get_user(message.from_user.id)
 
-    await message.answer(
+    await answer_with_icon(
+        message,
+        "action_start",
         "Йоу! Ты на связи с **Become Butter**. 🧈\n\n"
         "Твой путь от «сырых сливок» до «чистого золота» начинается здесь.\n"
         "Используй меню ниже, чтобы управлять своим прогрессом.",
@@ -39,7 +42,9 @@ async def cmd_profile(message: types.Message):
     filled_cells = int(user.current_day / 2.8)
     bar = "🧈" * filled_cells + "⬜" * (10 - filled_cells)
 
-    await message.answer(
+    await answer_with_icon(
+        message,
+        "action_profile",
         f"👤 **ТВОЙ МАСЛЯНЫЙ ПРОФИЛЬ**\n\n"
         f"🏷 **Статус:** {user.status}\n"
         f"💧 **Butter Drops:** {user.butter_drops}\n"
@@ -62,13 +67,16 @@ async def cmd_next_task(message: types.Message):
         user.is_resting = False
 
     if user.current_day > 28:
-        await message.answer("Ты уже достиг уровня **Solid Gold**! 🏆", reply_markup=get_main_kb(False),
-                             parse_mode="Markdown")
+        await answer_with_icon(message, "status_28_solid_gold",
+                               "Ты уже достиг уровня **Solid Gold**! 🏆",
+                               reply_markup=get_main_kb(False), parse_mode="Markdown")
         return
 
     task = TASKS.get(user.current_day)
 
-    await message.answer(
+    await answer_with_icon(
+        message,
+        day_icon(user.current_day),
         f"🔔 **ДЕНЬ {user.current_day}: {task['title']}**\n\n"
         f"{task['text']}\n\n"
         f"🔬 **Суть:** {task['science']}",
@@ -88,7 +96,10 @@ async def cmd_toggle_rest(message: types.Message):
     if new_rest_state:
         phrase = random.choice(ENCOURAGEMENT)
         text = f"🛡 **Режим отдыха активирован**\n\n{phrase}"
+        icon = "action_rest_start"
     else:
         text = "☀️ **Режим отдыха выключен!**\nПора возвращаться к взбиванию твоей лучшей версии."
+        icon = "action_rest_end"
 
-    await message.answer(text, reply_markup=get_main_kb(new_rest_state), parse_mode="Markdown")
+    await answer_with_icon(message, icon, text,
+                           reply_markup=get_main_kb(new_rest_state), parse_mode="Markdown")

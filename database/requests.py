@@ -1,6 +1,6 @@
 from database.models import async_session, User
 from sqlalchemy import select, update
-import datetime # Импортируем весь модуль, так надежнее
+import datetime
 
 # Регистрация юзера
 async def set_user(tg_id, username):
