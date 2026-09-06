@@ -25,7 +25,7 @@ async def cmd_start(message: types.Message):
     await answer_with_icon(
         message,
         "action_start",
-        "Йоу! Ты на связи с **Become Butter**. 🧈\n\n"
+        "Йоу! Ты на связи с *Become Butter*. 🧈\n\n"
         "Твой путь от «сырых сливок» до «чистого золота» начинается здесь.\n"
         "Используй меню ниже, чтобы управлять своим прогрессом.",
         reply_markup=get_main_kb(user.is_resting),
@@ -45,10 +45,10 @@ async def cmd_profile(message: types.Message):
     await answer_with_icon(
         message,
         "action_profile",
-        f"👤 **ТВОЙ МАСЛЯНЫЙ ПРОФИЛЬ**\n\n"
-        f"🏷 **Статус:** {user.status}\n"
-        f"💧 **Butter Drops:** {user.butter_drops}\n"
-        f"📅 **Прогресс:** {user.current_day}/28 дней\n"
+        f"👤 *ТВОЙ МАСЛЯНЫЙ ПРОФИЛЬ*\n\n"
+        f"🏷 *Статус:* {user.status}\n"
+        f"💧 *Butter Drops:* {user.butter_drops}\n"
+        f"📅 *Прогресс:* {user.current_day}/28 дней\n"
         f"[{bar}] {progress_percent}%\n\n"
         f"Помни: чтобы всё шло как по маслу, нельзя пропускать задания! 🔥",
         reply_markup=get_main_kb(user.is_resting),
@@ -68,7 +68,7 @@ async def cmd_next_task(message: types.Message):
 
     if user.current_day > 28:
         await answer_with_icon(message, "status_28_solid_gold",
-                               "Ты уже достиг уровня **Solid Gold**! 🏆",
+                               "Ты уже достиг уровня *Solid Gold*! 🏆",
                                reply_markup=get_main_kb(False), parse_mode="Markdown")
         return
 
@@ -77,9 +77,9 @@ async def cmd_next_task(message: types.Message):
     await answer_with_icon(
         message,
         day_icon(user.current_day),
-        f"🔔 **ДЕНЬ {user.current_day}: {task['title']}**\n\n"
+        f"🔔 *ДЕНЬ {user.current_day}: {task['title']}*\n\n"
         f"{task['text']}\n\n"
-        f"🔬 **Суть:** {task['science']}",
+        f"🔬 *Суть:* {task['science']}",
         reply_markup=get_task_kb(),
         parse_mode="Markdown"
     )
@@ -95,10 +95,10 @@ async def cmd_toggle_rest(message: types.Message):
 
     if new_rest_state:
         phrase = random.choice(ENCOURAGEMENT)
-        text = f"🛡 **Режим отдыха активирован**\n\n{phrase}"
+        text = f"🛡 *Режим отдыха активирован*\n\n{phrase}"
         icon = "action_rest_start"
     else:
-        text = "☀️ **Режим отдыха выключен!**\nПора возвращаться к взбиванию твоей лучшей версии."
+        text = "☀️ *Режим отдыха выключен!*\nПора возвращаться к взбиванию твоей лучшей версии."
         icon = "action_rest_end"
 
     await answer_with_icon(message, icon, text,

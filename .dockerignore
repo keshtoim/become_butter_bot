@@ -1,0 +1,18 @@
+.git/
+.idea/
+.vscode/
+.venv/
+venv/
+**/__pycache__/
+*.py[cod]
+*.log
+.env
+*.db
+*.sqlite3
+.DS_Store
+Thumbs.db
+
+# В образе нужны только PNG-иконки, исходники сборки не нужны
+tools/
+assets/icons/svg/
+assets/icons/_preview.png

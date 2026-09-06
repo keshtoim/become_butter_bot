@@ -19,7 +19,7 @@ async def task_done_handler(callback: CallbackQuery):
     if user.current_day >= 28:
         await callback.message.edit_reply_markup(reply_markup=None)
         await answer_with_icon(callback.message, "status_28_solid_gold",
-                               "🏆 **SOLID GOLD!** Ты прошел весь путь!", parse_mode="Markdown")
+                               "🏆 *SOLID GOLD!* Ты прошел весь путь!", parse_mode="Markdown")
         await callback.answer()
         return
 
@@ -46,7 +46,7 @@ async def task_done_handler(callback: CallbackQuery):
     await answer_with_icon(
         callback.message,
         icon_name,
-        f"✅ **Задание выполнено!**\n\n"
+        f"✅ *Задание выполнено!*\n\n"
         f"💧 Начислено: +10 капель масла.\n"
         f"📅 Прогресс: {new_day}/28 дней.\n"
         f"🏷 Статус: {current_status}",

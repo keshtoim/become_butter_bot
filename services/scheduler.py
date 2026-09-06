@@ -1,15 +1,24 @@
+import logging
+from datetime import datetime, timedelta
+
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from aiogram import Bot
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+
 from data.content import TASKS
 from bot.media import send_with_icon, day_icon
 import database.requests as rq
-from datetime import datetime, timedelta
+
+logger = logging.getLogger(__name__)
 
 
 # Функция, которая будет запускаться по расписанию
 async def send_daily_task(bot: Bot):
-    users = await rq.get_all_users()
+    try:
+        users = await rq.get_all_users()
+    except Exception:
+        logger.exception("Не удалось получить список пользователей для рассылки")
+        return
 
     for user in users:
         # Проверяем, прошло ли 24 часа с последней отправки
@@ -18,35 +27,37 @@ async def send_daily_task(bot: Bot):
 
         # Если юзер отдыхал — снимаем режим отдыха и шлем ободрение вместо задания
         if user.is_resting:
-            await rq.toggle_rest(user.tg_id, False)
             try:
+                await rq.toggle_rest(user.tg_id, False)
                 await bot.send_message(user.tg_id, "Ты отдохнул? Пора возвращаться в форму! 🧈")
-            except Exception as e:
-                print(f"Ошибка при отправке пользователю {user.tg_id}: {e}")
+            except Exception:
+                logger.exception("Ошибка при отправке пользователю %s", user.tg_id)
             continue
 
         # Если марафон еще не закончен
-        if user.current_day <= 28:
-            task = TASKS[user.current_day]
+        if user.current_day > 28:
+            continue
 
-            # Формируем кнопку подтверждения
-            keyboard = InlineKeyboardMarkup(inline_keyboard=[
-                [InlineKeyboardButton(text="Сделано! ✅", callback_data="task_done")]
-            ])
+        task = TASKS[user.current_day]
 
-            # Красиво оформляем текст задания
-            message_text = (
-                f"🔔 **ДЕНЬ {user.current_day}: {task['title']}**\n\n"
-                f"{task['text']}\n\n"
-                f"🔬 **Суть:** {task['science']}"
-            )
+        # Формируем кнопку подтверждения
+        keyboard = InlineKeyboardMarkup(inline_keyboard=[
+            [InlineKeyboardButton(text="Сделано! ✅", callback_data="task_done")]
+        ])
 
-            try:
-                await send_with_icon(bot, user.tg_id, day_icon(user.current_day),
-                                     message_text, reply_markup=keyboard, parse_mode="Markdown")
-                # ВАЖНО: Мы не обновляем день здесь. День обновится, когда юзер нажмет "Сделано" в tasks.py
-            except Exception as e:
-                print(f"Ошибка при отправке пользователю {user.tg_id}: {e}")
+        # Красиво оформляем текст задания
+        message_text = (
+            f"🔔 *ДЕНЬ {user.current_day}: {task['title']}*\n\n"
+            f"{task['text']}\n\n"
+            f"🔬 *Суть:* {task['science']}"
+        )
+
+        try:
+            await send_with_icon(bot, user.tg_id, day_icon(user.current_day),
+                                 message_text, reply_markup=keyboard, parse_mode="Markdown")
+            # ВАЖНО: день не обновляем здесь — он обновится, когда юзер нажмет "Сделано" в tasks.py
+        except Exception:
+            logger.exception("Ошибка при отправке пользователю %s", user.tg_id)
 
 
 # Инициализация планировщика
@@ -55,5 +66,4 @@ def setup_scheduler(bot: Bot):
     # Проверка базы каждый час
     scheduler.add_job(send_daily_task, "interval", hours=1, args=[bot])
     scheduler.start()
-
-
+    return scheduler
